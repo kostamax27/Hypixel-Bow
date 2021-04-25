@@ -1,0 +1,14 @@
+---
+# Hypixel-Bow Configuration File
+
+# will send to launched player and hit the projectile
+# not to send, set to false
+#
+# Replacement
+# %HP%      : player's health
+# %DAMAGE%  : amount of damage
+# %RAWNAME% : player's name (no tag)
+# %NAME%    : player's display name
+
+hit-message: "§dHP §e-> §b%NAME% §7(§aHP: §e%HP%§7)"
+...
