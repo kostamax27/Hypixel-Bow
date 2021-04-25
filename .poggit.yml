@@ -5,4 +5,5 @@ branches:
 projects:
   Hypixel-Bow:
     path: ""
+    icon: "Hypixel-Bow.gif"
 ...
