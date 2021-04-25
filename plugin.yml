@@ -1,8 +1,8 @@
 ---
-name: Hypixel-Bow
+name: HypixelBow
 api:
 - 3.9.0
-main: kostamax27\Hypixel-Bow\Main
+main: kostamax27\HypixelBow\Main
 version: 1.0.0
 author: kostamax27
 depend:
