@@ -1,4 +1,4 @@
-# Hypixel-Bow
+# HypixelBow
 **Play sound when hit player with bow**
 
 
