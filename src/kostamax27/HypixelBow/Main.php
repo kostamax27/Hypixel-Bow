@@ -3,6 +3,8 @@ namespace kostamax27\HypixelBow;
 
 use pocketmine\Player;
 use pocketmine\event\Listener;
+use pocketmine\event\entity\EntityDamageEvent;
+use pocketmine\event\entity\EntityDamageByEntityEvent;
 use pocketmine\event\entity\ProjectileHitEntityEvent;
 use pocketmine\event\entity\ProjectileHitEvent;
 use pocketmine\network\mcpe\protocol\PlaySoundPacket;
@@ -33,7 +35,7 @@ class Main extends PluginBase implements Listener{
                 
                 $message = $this->config->get('hit-message');
                 if($message !== false){
-                    $entity->sendMessage(str_replace(['%HP%', '%DAMAGE%', '%RAWNAME%', '%NAME%'], [$target->getHealth(), $projectile->getResultDamage(), $entity->getName(), $entity->getDisplayName()], $message));
+                    $entity->sendMessage(str_replace(['{hp}', '{damage}', '{rawname}', '{name}'], [$target->getHealth(), $projectile->getResultDamage(), $entity->getName(), $entity->getDisplayName()], $message));
                 }
             }
         }
