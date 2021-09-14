@@ -1,4 +1,5 @@
 <?php
+
 namespace kostamax27\HypixelBow;
 
 use pocketmine\Player;
@@ -32,7 +33,6 @@ class Main extends PluginBase implements Listener{
                 $pk->pitch = 1;
                 $pk->soundName = 'random.orb';
                 $entity->dataPacket($pk);
-                
                 $message = $this->config->get('hit-message');
                 if($message !== false){
                     $entity->sendMessage(str_replace(['{hp}', '{damage}', '{rawname}', '{name}'], [$target->getHealth(), $projectile->getResultDamage(), $entity->getName(), $entity->getDisplayName()], $message));
