@@ -1,4 +1,4 @@
-# HypixelBow
+### HypixelBow
 **Play sound when hit player with bow**
 
 
@@ -12,9 +12,10 @@ To edit settings, open config.yml in plugin folder
 `hit-message`: this will be sent to attacker when hit another player with projectile
 
 Replacement:
+
 ```
-%HP%      : player's health
-%DAMAGE%  : amount of damage
-%RAWNAME% : player's name (no tag)
-%NAME%    : player's display name
+{hp}      : player's health
+{damage}  : amount of damage
+{rawname} : player's name (no tag)
+{name}    : player's display name
 ```
