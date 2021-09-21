@@ -6,7 +6,7 @@
 #
 # Replacement
 #
-# {hp{      : player's health
+# {hp}      : player's health
 # {damage}  : amount of damage
 # {rawname} : player's name (no tag)
 # {name}    : player's display name
