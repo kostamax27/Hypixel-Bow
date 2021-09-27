@@ -2,17 +2,24 @@
 
 namespace kostamax27\HypixelBow;
 
-use pocketmine\Player;
-use pocketmine\event\Listener;
-use pocketmine\event\entity\EntityDamageEvent;
+// Network
+use pocketmine\network\mcpe\protocol\PlaySoundPacket;
+// Entity
 use pocketmine\event\entity\EntityDamageByEntityEvent;
 use pocketmine\event\entity\ProjectileHitEntityEvent;
 use pocketmine\event\entity\ProjectileHitEvent;
-use pocketmine\network\mcpe\protocol\PlaySoundPacket;
+use pocketmine\event\entity\EntityDamageEvent;
+// Plugin
 use pocketmine\plugin\PluginBase;
+// Event
+use pocketmine\event\Listener;
+// Utils
 use pocketmine\utils\Config;
+// Base
+use pocketmine\Player;
+use pocketmine\Server;
 
-class Main extends PluginBase implements Listener{
+class Main extends PluginBase implements Listener {
     public function onEnable(){
         $this->saveResource('config.yml', false);
         $this->config = new Config($this->getDataFolder() . 'config.yml', Config::YAML);
@@ -34,8 +41,12 @@ class Main extends PluginBase implements Listener{
                 $pk->soundName = 'random.orb';
                 $entity->dataPacket($pk);
                 $message = $this->config->get('hit-message');
-                if($message !== false){
+                if($this->getConfig()->getNested("message-enable", true)){
                     $entity->sendMessage(str_replace(['{hp}', '{damage}', '{rawname}', '{name}'], [$target->getHealth(), $projectile->getResultDamage(), $entity->getName(), $entity->getDisplayName()], $message));
+                }
+                $popup = $this->config->get('hit-popup');
+                if($this->getConfig()->getNested("popup-enable", true)){
+                    $entity->sendPopup(str_replace(['{hp}', '{damage}', '{rawname}', '{name}'], [$target->getHealth(), $projectile->getResultDamage(), $entity->getName(), $entity->getDisplayName()], $popup));
                 }
             }
         }
