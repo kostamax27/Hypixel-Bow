@@ -17,6 +17,7 @@ use pocketmine\event\Listener;
 use pocketmine\utils\Config;
 // Base
 use pocketmine\Player;
+use pocketmine\Server;
 
 class Main extends PluginBase implements Listener {
     public function onEnable(){
@@ -38,11 +39,11 @@ class Main extends PluginBase implements Listener {
                 $pk->pitch = 1;
                 $pk->soundName = 'random.orb';
                 $entity->dataPacket($pk);
-                $message = $this->getConfig()->get("hit-message");
+                $message = $this->config->get("hit-message");
                 if($this->getConfig()->getNested("message-enable", true)){
                     $entity->sendMessage(str_replace(['{hp}', '{damage}', '{rawname}', '{name}'], [$target->getHealth(), $projectile->getResultDamage(), $entity->getName(), $entity->getDisplayName()], $message));
                 }
-                $popup = $this->getConfig()->get("hit-popup");
+                $popup = $this->config->get("hit-popup");
                 if($this->getConfig()->getNested("popup-enable", true)){
                     $entity->sendPopup(str_replace(['{hp}', '{damage}', '{rawname}', '{name}'], [$target->getHealth(), $projectile->getResultDamage(), $entity->getName(), $entity->getDisplayName()], $popup));
                 }
