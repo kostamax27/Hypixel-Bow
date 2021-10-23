@@ -9,6 +9,7 @@ use pocketmine\event\entity\EntityDamageByEntityEvent;
 use pocketmine\event\entity\ProjectileHitEntityEvent;
 use pocketmine\event\entity\ProjectileHitEvent;
 use pocketmine\event\entity\EntityDamageEvent;
+use pocketmine\entity\projectile\Arrow;
 // Plugin
 use pocketmine\plugin\PluginBase;
 // Event
@@ -27,6 +28,7 @@ class Main extends PluginBase implements Listener {
     public function onProjectileHit(ProjectileHitEvent $event){
         $projectile = $event->getEntity();
         $entity = $projectile->getOwningEntity();
+        if(!$projectile instanceof Arrow) return;
         if($entity instanceof Player && $event instanceof ProjectileHitEntityEvent){
             $target = $event->getEntityHit();
             if($target instanceof Player){
