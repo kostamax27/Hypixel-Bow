@@ -39,13 +39,3 @@ enable-tip: false  # Enable tip ?
 hit-tip: "§c{name} §7(§aHP: §e{hp}§7)"
 ...
 ```
-
-Replacement:
-
-```
-{hp}      : player health
-{max_hp}  : player max health
-{damage}  : amount of damage
-{name}    : player name
-{display} : player display name
-```
