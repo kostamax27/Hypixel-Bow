@@ -7,13 +7,22 @@
 # Replacement
 #
 # {hp}      : player's health
+# {max_hp}  : player's max health
 # {damage}  : amount of damage
-# {rawname} : player's name (no tag)
-# {name}    : player's display name
+# {name}    : player's name
+# {display} : player's display name
 
-message-enale: true # Enable message ?
+enable-sound: true # Enable sound ?
+sound-volume: 1
+sound-pitch: 1
+sound-name: "random.orb"
+
+enable-message: true # Enable message ?
 hit-message: "§c{name} §7(§aHP: §e{hp}§7)"
 
-popup-enable: false # Enable popup ?
+enable-popup: false  # Enable popup ?
 hit-popup: "§c{name} §7(§aHP: §e{hp}§7)"
+
+enable-tip: false  # Enable tip ?
+hit-tip: "§c{name} §7(§aHP: §e{hp}§7)"
 ...
