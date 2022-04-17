@@ -9,13 +9,43 @@
 ### Settings
 To edit settings, open config.yml in plugin folder
 
-`hit-message`: this will be sent to attacker when hit another player with projectile
+```yml
+---
+# HypixelBow Configuration File
+
+# will send to launched player and hit the projectile
+# not to send, set to false.
+#
+# Replacement
+#
+# {hp}      : player's health
+# {max_hp}  : player's max health
+# {damage}  : amount of damage
+# {name}    : player's name
+# {display} : player's display name
+
+enable-sound: true # Enable sound ?
+sound-volume: 1
+sound-pitch: 1
+sound-name: "random.orb"
+
+enable-message: true # Enable message ?
+hit-message: "§c{name} §7(§aHP: §e{hp}§7)"
+
+enable-popup: false  # Enable popup ?
+hit-popup: "§c{name} §7(§aHP: §e{hp}§7)"
+
+enable-tip: false  # Enable tip ?
+hit-tip: "§c{name} §7(§aHP: §e{hp}§7)"
+...
+```
 
 Replacement:
 
 ```
-{hp}      : player's health
+{hp}      : player health
+{max_hp}  : player max health
 {damage}  : amount of damage
-{rawname} : player's name (no tag)
-{name}    : player's display name
+{name}    : player name
+{display} : player display name
 ```
