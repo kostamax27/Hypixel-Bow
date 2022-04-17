@@ -1,9 +1,17 @@
 ---
 name: HypixelBow
-api:
-- 3.9.0
+api: 4.0.0
 main: kostamax27\HypixelBow\Main
-version: 1.0.0
+version: 1.0.4
 author: kostamax27
-mcpe-protocol: 471
+mcpe-protocol: 486
+
+commands:
+  hbow:
+    description: "HypixelBow settings"
+    permission: hypixelbow.cmd
+
+permissions:
+  hypixelbow.cmd:
+    default: op
 ...
