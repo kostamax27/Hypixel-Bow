@@ -2,9 +2,9 @@
 name: HypixelBow
 api: 4.0.0
 main: kostamax27\HypixelBow\Main
-version: 1.0.5
+version: 1.0.6
 author: kostamax27
-mcpe-protocol: [486, 503, 527, 534]
+mcpe-protocol: [486, 503, 527, 534, 544]
 
 commands:
   hbow:
