@@ -29,67 +29,56 @@ class Main extends PluginBase implements Listener {
 	public function onCommand(CommandSender $sender, Command $command, string $label, array $args): bool {
 		if($command->getName() == "hbow") {
 			if($sender instanceof Player) {
-             		   $this->getHypixelBowSettings($sender);
-           		} else {
-			    $sender->sendMessage("Use this command in-game");
+				$this->getHypixelBowSettings($sender);
+           	} else {
+				$sender->sendMessage("Use this command in-game");
 			}
 		}
 		return true;
 	}
 	
 	public function getHypixelBowSettings($player) {
-		$form = new CustomForm(function(Player $player, $data) {
-			if($data === null) {
+		$form = new CustomForm(function(Player $player, $data): void {
+			if(is_null($data)) {
 			    return;
 			}
-			if($data[1] === true) {
+			if($data[1]) {
 			    $this->config->set("enable-sound", true);
 			} else {
 			    $this->config->set("enable-sound", false);
 			}
-			if($data[2] == null || !is_numeric($data[2])) {
-			    return;
-			} else {
+			if($data[2] !== null || is_numeric($data[2])) {
 			    $this->config->set("sound-volume", $data[2]);
 			}
-			if($data[3] == null || !is_numeric($data[3])) {
-			    return;
-			} else {
+			if($data[3] !== null || is_numeric($data[3])) {
 			    $this->config->set("sound-pitch", $data[3]);
 			}
-			if($data[4] == null) {
-			    return;
-			} else {
+			if($data[4] !== null) {
 			    $this->config->set("sound-name", $data[4]);
 			}
-			if($data[6] === true) {
+			if($data[6]) {
 			    $this->config->set("enable-message", true);
 			} else {
 			    $this->config->set("enable-message", false);
 			}
-			if($data[7] == null) {
-			    return;
-			} else {
+			if($data[7] !== null) {
 			    $this->config->set("hit-message", $data[7]);
 			}
-			if($data[8] === true) {
+			if($data[8]) {
 			    $this->config->set("enable-popup", true);
 			} else {
 			    $this->config->set("enable-popup", false);
 			}
-			if($data[9] == null) {
+			if($data[9] !== null) {
+				$this->config->set("hit-popup", $data[9]);
 			    return;
-			} else {
-			    $this->config->set("hit-popup", $data[9]);
 			}
-			if($data[10] === true) {
+			if($data[10]) {
 			    $this->config->set("enable-tip", true);
 			} else {
 			    $this->config->set("enable-tip", false);
 			}
-			if($data[11] == null) {
-			    return;
-			} else {
+			if($data[11] !== null) {
 			    $this->config->set("hit-tip", $data[11]);
 			}
 		});
