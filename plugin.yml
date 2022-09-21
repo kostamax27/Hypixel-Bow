@@ -1,15 +1,17 @@
 ---
 name: HypixelBow
 api: 4.0.0
-main: kostamax27\HypixelBow\Main
-version: 1.0.9
+main: kostamax27\HypixelBow\HypixelBow
+version: 1.1.0
 author: kostamax27
-mcpe-protocol: [486, 503, 527, 534, 544, 545, 554]
-
-commands:
-  hbow:
-    description: "HypixelBow settings"
-    permission: hypixelbow.cmd
+mcpe-protocol: 
+  - 486
+  - 503
+  - 527
+  - 534
+  - 544
+  - 545
+  - 554
 
 permissions:
   hypixelbow.cmd:
