@@ -65,8 +65,10 @@ abstract class Element implements JsonSerializable{
 
 	/**
 	 * @param mixed $value
+	 *
+	 * @return void
 	 */
-	public function validate($value) : void{
+	public function validate(mixed $value) : void{
 		if(!is_int($value)){
 			throw new FormValidationException("Expected int, got " . gettype($value));
 		}

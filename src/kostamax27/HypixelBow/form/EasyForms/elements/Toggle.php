@@ -54,11 +54,11 @@ class Toggle extends Element{
 	}
 
 	/**
-	 * @param $value
+	 * @param mixed $value
 	 *
 	 * @return void
 	 */
-	public function validate($value) : void{
+	public function validate(mixed $value) : void{
 		if(!is_bool($value)){
 			throw new FormValidationException("Expected bool, got " . gettype($value));
 		}

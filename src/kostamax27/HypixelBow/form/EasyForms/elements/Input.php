@@ -63,11 +63,11 @@ class Input extends Element{
 	}
 
 	/**
-	 * @param $value
+	 * @param mixed $value
 	 *
 	 * @return void
 	 */
-	public function validate($value) : void{
+	public function validate(mixed $value) : void{
 		if(!is_string($value)){
 			throw new FormValidationException("Expected string, got " . gettype($value));
 		}
