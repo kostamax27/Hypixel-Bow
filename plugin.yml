@@ -4,7 +4,7 @@ api: 4.0.0
 main: kostamax27\HypixelBow\Main
 version: 1.0.9
 author: kostamax27
-mcpe-protocol: [486, 503, 527, 534, 544, 545]
+mcpe-protocol: [486, 503, 527, 534, 544, 545, 554]
 
 commands:
   hbow:
