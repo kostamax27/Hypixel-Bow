@@ -64,6 +64,8 @@ class Input extends Element{
 
 	/**
 	 * @param $value
+	 *
+	 * @return void
 	 */
 	public function validate($value) : void{
 		if(!is_string($value)){

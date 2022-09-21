@@ -55,6 +55,8 @@ class Toggle extends Element{
 
 	/**
 	 * @param $value
+	 *
+	 * @return void
 	 */
 	public function validate($value) : void{
 		if(!is_bool($value)){
