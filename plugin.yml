@@ -12,9 +12,9 @@ mcpe-protocol:
   - 544
   - 545
   - 554
-  
+
 virions:
-  - EasyForms
+  - pmforms
 
 permissions:
   hypixelbow.cmd:

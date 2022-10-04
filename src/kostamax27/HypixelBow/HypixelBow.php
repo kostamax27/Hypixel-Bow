@@ -11,11 +11,11 @@ use kostamax27\HypixelBow\command\hBowCommand;
 use pocketmine\event\entity\ProjectileHitEvent;
 use pocketmine\event\entity\ProjectileHitEntityEvent;
 use pocketmine\network\mcpe\protocol\PlaySoundPacket;
-use Frago9876543210\EasyForms\elements\Label;
-use Frago9876543210\EasyForms\elements\Input;
-use Frago9876543210\EasyForms\elements\Toggle;
-use Frago9876543210\EasyForms\forms\CustomForm;
-use Frago9876543210\EasyForms\forms\CustomFormResponse;
+use dktapps\pmforms\element\Label;
+use dktapps\pmforms\element\Input;
+use dktapps\pmforms\element\Toggle;
+use dktapps\pmforms\CustomForm;
+use dktapps\pmforms\CustomFormResponse;
 
 class HypixelBow extends PluginBase implements Listener {
 
@@ -39,46 +39,33 @@ class HypixelBow extends PluginBase implements Listener {
 		$player->sendForm(new CustomForm(
 			"HypixelBowSettings",
 			[
-				new Label("Sound settings: \n\n"),
-				new Toggle("Enable sound:", $this->data['sound']['enable']),
-				new Input("Sound volume: ", "float: 1.0", $this->data['sound']['volume']),
-				new Input("Sound pitch: ", "float: 1.0", $this->data['sound']['pitch']),
-				new Input("Sound name: ", "string: random.orb", $this->data['sound']['name']),
-				new Label("Message settings: \n\n"),
-				new Toggle("Enable message:", $this->data['message']['enable']),
-				new Input("Hit message: ", "string: message", $this->data['message']['message']),
-				new Toggle("Enable popup:", $this->data['popup']['enable']),
-				new Input("Hit popup: ", "string: popup", $this->data['popup']['message']),
-				new Toggle("Enable tip:", $this->data['tip']['enable']),
-				new Input("Hit tip: ", "string: tip", $this->data['tip']['message'])
+				new Label("label_0", "Sound settings: \n\n"),
+				new Toggle("toggle_0", "Enable sound:", $this->data['sound']['enable']),
+				new Input("input_0", "Sound volume: ", "float: 1.0", $this->data['sound']['volume']),
+				new Input("input_1", "Sound pitch: ", "float: 1.0", $this->data['sound']['pitch']),
+				new Input("input_2", "Sound name: ", "string: random.orb", $this->data['sound']['name']),
+				new Label("label_1", "Message settings: \n\n"),
+				new Toggle("toggle_1", "Enable message:", $this->data['message']['enable']),
+				new Input("input_3", "Hit message: ", "string: message", $this->data['message']['message']),
+				new Toggle("toggle_2", "Enable popup:", $this->data['popup']['enable']),
+				new Input("input_4", "Hit popup: ", "string: popup", $this->data['popup']['message']),
+				new Toggle("toggle_3", "Enable tip:", $this->data['tip']['enable']),
+				new Input("input_5", "Hit tip: ", "string: tip", $this->data['tip']['message'])
 			],
 			function(Player $player, CustomFormResponse $response) : void {
-				[
-					$enable_sound,
-					$sound_volume,
-					$sound_pitch,
-					$sound_name,
-					$enable_message,
-					$hit_message,
-					$enable_popup,
-					$hit_popup,
-					$enable_tip,
-					$hit_tip
-				] = $response->getValues();
+				$this->data['sound']['enable'] = $response->getBool('toggle_0');
+				$this->data['sound']['volume'] = floatval($response->getString('input_0'));
+				$this->data['sound']['pitch'] = floatval($response->getString('input_1'));
+				$this->data['sound']['name'] = $response->getString('input_2');
 
-				$this->data['sound']['enable'] = $enable_sound;
-				$this->data['sound']['volume'] = is_numeric($sound_volume) ? $sound_volume : $this->data['sound']['volume'];
-				$this->data['sound']['pitch'] = is_numeric($sound_pitch) ? $sound_pitch : $this->data['sound']['pitch'];
-				$this->data['sound']['name'] = $sound_name == null ? $this->data['sound']['name'] : $sound_name;
+				$this->data['message']['enable'] = $response->getBool('toggle_1');
+				$this->data['message']['message'] = $response->getString('input_3');
 
-				$this->data['message']['enable'] = $enable_message;
-				$this->data['message']['message'] = $hit_message == null ? $this->data['message']['message'] : $hit_message;
+				$this->data['popup']['enable'] = $response->getBool('toggle_2');
+				$this->data['popup']['message'] = $response->getString('input_4');
 
-				$this->data['popup']['enable'] = $enable_popup;
-				$this->data['popup']['message'] = $hit_popup == null ? $this->data['popup']['message'] : $hit_popup;
-
-				$this->data['tip']['enable'] = $enable_tip;
-				$this->data['tip']['message'] = $hit_tip == null ? $this->data['tip']['message'] : $hit_tip;
+				$this->data['tip']['enable'] = $response->getBool('toggle_3');
+				$this->data['tip']['message'] = $response->getString('input_5');
 
 				$this->saveData();
 			}
@@ -107,7 +94,7 @@ class HypixelBow extends PluginBase implements Listener {
 		}
 	}
 
-	private function playSound(Player $player, float $volume, float $pitch, string $sound): void {
+	private function playSound(Player $player, float $volume = 1.0, float $pitch = 1.0, string $sound = ''): void {
 		$pk = new PlaySoundPacket();
 		$pk->x = $player->getPosition()->getX();
 		$pk->y = $player->getPosition()->getY();
