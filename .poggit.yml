@@ -6,4 +6,9 @@ projects:
   Hypixel-Bow:
     path: ""
     icon: "Hypixel-Bow.gif"
+  libs:
+    - src: Frago9876543210\EasyForms\EasyForms
+      version: ^1.5.0
+  lint:
+      phpstan: false
 ...

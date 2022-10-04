@@ -11,11 +11,11 @@ use kostamax27\HypixelBow\command\hBowCommand;
 use pocketmine\event\entity\ProjectileHitEvent;
 use pocketmine\event\entity\ProjectileHitEntityEvent;
 use pocketmine\network\mcpe\protocol\PlaySoundPacket;
-use kostamax27\HypixelBow\form\EasyForms\elements\Label;
-use kostamax27\HypixelBow\form\EasyForms\elements\Input;
-use kostamax27\HypixelBow\form\EasyForms\elements\Toggle;
-use kostamax27\HypixelBow\form\EasyForms\forms\CustomForm;
-use kostamax27\HypixelBow\form\EasyForms\forms\CustomFormResponse;
+use Frago9876543210\EasyForms\elements\Label;
+use Frago9876543210\EasyForms\elements\Input;
+use Frago9876543210\EasyForms\elements\Toggle;
+use Frago9876543210\EasyForms\forms\CustomForm;
+use Frago9876543210\EasyForms\forms\CustomFormResponse;
 
 class HypixelBow extends PluginBase implements Listener {
 
