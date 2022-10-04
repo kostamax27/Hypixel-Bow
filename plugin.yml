@@ -13,7 +13,7 @@ mcpe-protocol:
   - 545
   - 554
   
-  virions:
+virions:
   - EasyForms
 
 permissions:
