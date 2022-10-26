@@ -2,7 +2,7 @@
 name: HypixelBow
 api: 4.0.0
 main: kostamax27\HypixelBow\HypixelBow
-version: 1.1.0
+version: 1.1.1
 author: kostamax27
 mcpe-protocol: 
   - 486
