@@ -12,6 +12,7 @@ mcpe-protocol:
   - 544
   - 545
   - 554
+  - 557
 
 virions:
   - pmforms
