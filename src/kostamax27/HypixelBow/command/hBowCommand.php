@@ -39,13 +39,13 @@ class hBowCommand extends Command implements PluginOwned {
 	 */
 	public function execute(CommandSender $sender, string $commandLabel, array $args): void {
 		if($sender instanceof Player) {
-			if($sender->hasPermission('hypixelbow.cmd')) {
+			if($sender->hasPermission("hypixelbow.cmd")) {
 				$this->plugin->getHypixelBowSettings($sender);
 			} else {
-				$sender->sendMessage(TextFormat::RED . 'You have not permissions to use this command!');
+				$sender->sendMessage(TextFormat::RED . "You have not permissions to use this command!");
 			}
 		} else {
-			$sender->sendMessage(TextFormat::RED . 'Use this command in-game!');
+			$sender->sendMessage(TextFormat::RED . "Use this command in-game!");
 		}
 	}
 

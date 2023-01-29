@@ -31,12 +31,12 @@ sound:
   name: random.orb
 message:
   enable: true
-  message: '§c{name} §7(§aHP: §e{hp}§7)'
+  message: "§c{name} §7(§aHP: §e{hp}§7)"
 popup:
   enable: true
-  message: '§c{name} §7(§aHP: §e{hp}§7)'
+  message: "§c{name} §7(§aHP: §e{hp}§7)"
 tip:
   enable: true
-  message: '§c{name} §7(§aHP: §e{hp}§7)'
+  message: "§c{name} §7(§aHP: §e{hp}§7)"
 ...
 ```
