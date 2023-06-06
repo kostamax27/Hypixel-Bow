@@ -19,7 +19,7 @@ mcpe-protocol:
   - 582
 
 virions:
-  - libFormsUI
+  - FormsUI
 
 permissions:
   hypixelbow.cmd:
