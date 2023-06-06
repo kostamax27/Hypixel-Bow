@@ -21,7 +21,7 @@ class hBowCommand extends Command implements PluginOwned {
      * @param string|null $usageMessage
      * @param array $aliases
      */
-    public function __construct(private readonly HypixelBow $plugin, string $name, string $description = "", string $usageMessage = null, array $aliases = []) {
+    public function __construct(private HypixelBow $plugin, string $name, string $description = "", string $usageMessage = null, array $aliases = []) {
         parent::__construct($name, $description, $usageMessage, $aliases);
 
         $this->setPermission("hypixelbow.cmd");
