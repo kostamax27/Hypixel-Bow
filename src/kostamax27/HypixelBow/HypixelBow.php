@@ -15,33 +15,33 @@ use pocketmine\network\mcpe\protocol\PlaySoundPacket;
 
 class HypixelBow extends PluginBase implements Listener {
 
-	/** @var array */
-	private array $data = [];
+    /** @var array */
+    private array $data = [];
 
-	/**
-	 * @return void
-	 */
-	public function onLoad(): void {
-		$this->saveDefaultConfig();
+    /**
+     * @return void
+     */
+    public function onLoad(): void {
+        $this->saveDefaultConfig();
 
-		$this->data = $this->getConfig()->getAll();
-	}
+        $this->data = $this->getConfig()->getAll();
+    }
 
-	/**
-	 * @return void
-	 */
-	public function onEnable(): void {
-		$this->getServer()->getPluginManager()->registerEvents($this, $this);
+    /**
+     * @return void
+     */
+    public function onEnable(): void {
+        $this->getServer()->getPluginManager()->registerEvents($this, $this);
 
-		$this->getServer()->getCommandMap()->register($this->getName(), new hBowCommand($this, "hbow", "HypixelBow settings"));
-	}
+        $this->getServer()->getCommandMap()->register($this->getName(), new hBowCommand($this, "hbow", "HypixelBow settings"));
+    }
 
-	/**
-	 * @param Player $player
-	 *
-	 * @return void
-	 */
-	public function getHypixelBowSettings(Player $player): void {
+    /**
+     * @param Player $player
+     *
+     * @return void
+     */
+    public function getHypixelBowSettings(Player $player): void {
         $form = new CustomForm(function(Player $player, ?array $data = null): void {
             if($data === null) {
                 return;
@@ -78,29 +78,29 @@ class HypixelBow extends PluginBase implements Listener {
         $form->addInput("Hit tip: ", "string: tip", (string) $this->data["tip"]["message"]);
 
         $player->sendForm($form);
-	}
+    }
 
-	/**
-	 *
-	 * @noinspection PhpUnused
-	 *
-	 * @param ProjectileHitEntityEvent $event
-	 *
-	 * @return void
-	 */
-	public function onProjectileHit(ProjectileHitEntityEvent $event): void {
-		$projectile = $event->getEntity();
+    /**
+     *
+     * @noinspection PhpUnused
+     *
+     * @param ProjectileHitEntityEvent $event
+     *
+     * @return void
+     */
+    public function onProjectileHit(ProjectileHitEntityEvent $event): void {
+        $projectile = $event->getEntity();
 
-		if(!($projectile instanceof Arrow)) {
+        if(!($projectile instanceof Arrow)) {
             return;
         }
 
-		$owner = $projectile->getOwningEntity();
+        $owner = $projectile->getOwningEntity();
         $target = $event->getEntityHit();
 
-		if(!($owner instanceof Player && $target instanceof Player)) {
+        if(!($owner instanceof Player && $target instanceof Player)) {
             return;
-		}
+        }
 
         if($this->data["sound"]["enable"]) {
             $this->playSound($owner, $this->data["sound"]["volume"], $this->data["sound"]["pitch"], $this->data["sound"]["name"]);
@@ -114,35 +114,35 @@ class HypixelBow extends PluginBase implements Listener {
         if($this->data["tip"]["enable"]) {
             $owner->sendTip(str_replace(["{hp}", "{damage}", "{name}", "{display}"], [$target->getHealth(), $projectile->getResultDamage(), $target->getName(), $target->getDisplayName()], $this->data["tip"]["message"]));
         }
-	}
+    }
 
-	/**
-	 * @param Player $player
-	 * @param float $volume
-	 * @param float $pitch
-	 * @param string $sound
-	 *
-	 * @return void
-	 */
-	private function playSound(Player $player, float $volume = 1.0, float $pitch = 1.0, string $sound = ""): void {
-		$position = $player->getPosition();
+    /**
+     * @param Player $player
+     * @param float $volume
+     * @param float $pitch
+     * @param string $sound
+     *
+     * @return void
+     */
+    private function playSound(Player $player, float $volume = 1.0, float $pitch = 1.0, string $sound = ""): void {
+        $position = $player->getPosition();
 
-		$player->getNetworkSession()->sendDataPacket(PlaySoundPacket::create(
-			soundName: $sound,
-			x: $position->getX(),
-			y: $position->getY(),
-			z: $position->getZ(),
-			volume: $volume,
-			pitch: $pitch
-		));
-	}
+        $player->getNetworkSession()->sendDataPacket(PlaySoundPacket::create(
+            soundName: $sound,
+            x: $position->getX(),
+            y: $position->getY(),
+            z: $position->getZ(),
+            volume: $volume,
+            pitch: $pitch
+        ));
+    }
 
     /**
      * @return void
      * @throws \JsonException
      */
-	private function saveData(): void {
-		$this->getConfig()->setAll($this->data);
-		$this->getConfig()->save();
-	}
+    private function saveData(): void {
+        $this->getConfig()->setAll($this->data);
+        $this->getConfig()->save();
+    }
 }
