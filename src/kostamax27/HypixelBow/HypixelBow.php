@@ -6,15 +6,10 @@ namespace kostamax27\HypixelBow;
 
 use pocketmine\player\Player;
 use pocketmine\event\Listener;
-use dktapps\pmforms\CustomForm;
 use pocketmine\plugin\PluginBase;
-use dktapps\pmforms\element\Label;
-use dktapps\pmforms\element\Input;
-use dktapps\pmforms\element\Toggle;
-use dktapps\pmforms\CustomFormResponse;
+use Vecnavium\FormsUI\CustomForm;
 use pocketmine\entity\projectile\Arrow;
 use kostamax27\HypixelBow\command\hBowCommand;
-use pocketmine\event\entity\ProjectileHitEvent;
 use pocketmine\event\entity\ProjectileHitEntityEvent;
 use pocketmine\network\mcpe\protocol\PlaySoundPacket;
 
@@ -38,7 +33,7 @@ class HypixelBow extends PluginBase implements Listener {
 	public function onEnable(): void {
 		$this->getServer()->getPluginManager()->registerEvents($this, $this);
 
-		$this->getServer()->getCommandMap()->register($this->getName(), new hBowCommand($this, "hbow", "HypixelBow settings", null, []));
+		$this->getServer()->getCommandMap()->register($this->getName(), new hBowCommand($this, "hbow", "HypixelBow settings"));
 	}
 
 	/**
@@ -47,73 +42,78 @@ class HypixelBow extends PluginBase implements Listener {
 	 * @return void
 	 */
 	public function getHypixelBowSettings(Player $player): void {
-		$player->sendForm(new CustomForm(
-			"HypixelBowSettings",
-			[
-				new Label("label_0", "Sound settings: \n\n"),
-				new Toggle("toggle_0", "Enable sound:", (bool) $this->data["sound"]["enable"]),
-				new Input("input_0", "Sound volume: ", "float: 1.0", (string) $this->data["sound"]["volume"]),
-				new Input("input_1", "Sound pitch: ", "float: 1.0", (string) $this->data["sound"]["pitch"]),
-				new Input("input_2", "Sound name: ", "string: random.orb", (string) $this->data["sound"]["name"]),
-				new Label("label_1", "Message settings: \n\n"),
-				new Toggle("toggle_1", "Enable message:", (bool) $this->data["message"]["enable"]),
-				new Input("input_3", "Hit message: ", "string: message", (string) $this->data["message"]["message"]),
-				new Toggle("toggle_2", "Enable popup:", (bool) $this->data["popup"]["enable"]),
-				new Input("input_4", "Hit popup: ", "string: popup", (string) $this->data["popup"]["message"]),
-				new Toggle("toggle_3", "Enable tip:", (bool) $this->data["tip"]["enable"]),
-				new Input("input_5", "Hit tip: ", "string: tip", (string) $this->data["tip"]["message"])
-			],
-			function(Player $player, CustomFormResponse $response) : void {
-				$this->data["sound"]["enable"] = $response->getBool("toggle_0");
-				$this->data["sound"]["volume"] = (float) $response->getString("input_0");
-				$this->data["sound"]["pitch"] = (float) $response->getString("input_1");
-				$this->data["sound"]["name"] = $response->getString("input_2");
+        $form = new CustomForm(function(Player $player, ?array $data = null): void {
+            if($data === null) {
+                return;
+            }
 
-				$this->data["message"]["enable"] = $response->getBool("toggle_1");
-				$this->data["message"]["message"] = $response->getString("input_3");
+            $this->data["sound"]["enable"] = (bool) $data[1];
+            $this->data["sound"]["volume"] = (float) $data[2];
+            $this->data["sound"]["pitch"] = (float) $data[3];
+            $this->data["sound"]["name"] = (string) $data[4];
 
-				$this->data["popup"]["enable"] = $response->getBool("toggle_2");
-				$this->data["popup"]["message"] = $response->getString("input_4");
+            $this->data["message"]["enable"] = (bool) $data[6];
+            $this->data["message"]["message"] = (string) $data[7];
 
-				$this->data["tip"]["enable"] = $response->getBool("toggle_3");
-				$this->data["tip"]["message"] = $response->getString("input_5");
+            $this->data["popup"]["enable"] = (bool) $data[8];
+            $this->data["popup"]["message"] = (string) $data[9];
 
-				$this->saveData();
-			}
-		));
+            $this->data["tip"]["enable"] = (bool) $data[10];
+            $this->data["tip"]["message"] = (string) $data[11];
+
+            $this->saveData();
+        });
+        $form->setTitle("HypixelBowSettings");
+        $form->addLabel("Sound settings: \n\n");
+        $form->addToggle("Enable sound:", (bool) $this->data["sound"]["enable"]);
+        $form->addInput("Sound volume: ", "float: 1.0", (string) $this->data["sound"]["volume"]);
+        $form->addInput("Sound pitch: ", "float: 1.0", (string) $this->data["sound"]["pitch"]);
+        $form->addInput("Sound name: ", "string: random.orb", (string) $this->data["sound"]["name"]);
+        $form->addLabel("Message settings: \n\n");
+        $form->addToggle("Enable message:", (bool) $this->data["message"]["enable"]);
+        $form->addInput("Hit message: ", "string: message", (string) $this->data["message"]["message"]);
+        $form->addToggle("Enable popup:", (bool) $this->data["popup"]["enable"]);
+        $form->addInput("Hit popup: ", "string: popup", (string) $this->data["popup"]["message"]);
+        $form->addToggle("Enable tip:", (bool) $this->data["tip"]["enable"]);
+        $form->addInput("Hit tip: ", "string: tip", (string) $this->data["tip"]["message"]);
+
+        $player->sendForm($form);
 	}
 
 	/**
 	 *
 	 * @noinspection PhpUnused
 	 *
-	 * @param ProjectileHitEvent $event
+	 * @param ProjectileHitEntityEvent $event
 	 *
 	 * @return void
 	 */
-	public function onProjectileHit(ProjectileHitEvent $event): void {
+	public function onProjectileHit(ProjectileHitEntityEvent $event): void {
 		$projectile = $event->getEntity();
 
-		if(!$projectile instanceof Arrow) return;
+		if(!($projectile instanceof Arrow)) {
+            return;
+        }
 
-		$player = $projectile->getOwningEntity();
-		if($player instanceof Player && $event instanceof ProjectileHitEntityEvent) {
-			$target = $event->getEntityHit();
-			if($target instanceof Player) {
-				if($this->data["sound"]["enable"]) {
-					$this->playSound($player, $this->data["sound"]["volume"], $this->data["sound"]["pitch"], $this->data["sound"]["name"]);
-				}
-				if($this->data["message"]["enable"]) {
-					$player->sendMessage(str_replace(["{hp}", "{damage}", "{name}", "{display}"], [$target->getHealth(), $projectile->getResultDamage(), $target->getName(), $target->getDisplayName()], $this->data["message"]["message"]));
-				}
-				if($this->data["popup"]["enable"]) {
-					$player->sendPopup(str_replace(["{hp}", "{damage}", "{name}", "{display}"], [$target->getHealth(), $projectile->getResultDamage(), $target->getName(), $target->getDisplayName()], $this->data["popup"]["message"]));
-				}
-				if($this->data["tip"]["enable"]) {
-					$player->sendTip(str_replace(["{hp}", "{damage}", "{name}", "{display}"], [$target->getHealth(), $projectile->getResultDamage(), $target->getName(), $target->getDisplayName()], $this->data["tip"]["message"]));
-				}
-			}
+		$owner = $projectile->getOwningEntity();
+        $target = $event->getEntityHit();
+
+		if(!($owner instanceof Player && $target instanceof Player)) {
+            return;
 		}
+
+        if($this->data["sound"]["enable"]) {
+            $this->playSound($owner, $this->data["sound"]["volume"], $this->data["sound"]["pitch"], $this->data["sound"]["name"]);
+        }
+        if($this->data["message"]["enable"]) {
+            $owner->sendMessage(str_replace(["{hp}", "{damage}", "{name}", "{display}"], [$target->getHealth(), $projectile->getResultDamage(), $target->getName(), $target->getDisplayName()], $this->data["message"]["message"]));
+        }
+        if($this->data["popup"]["enable"]) {
+            $owner->sendPopup(str_replace(["{hp}", "{damage}", "{name}", "{display}"], [$target->getHealth(), $projectile->getResultDamage(), $target->getName(), $target->getDisplayName()], $this->data["popup"]["message"]));
+        }
+        if($this->data["tip"]["enable"]) {
+            $owner->sendTip(str_replace(["{hp}", "{damage}", "{name}", "{display}"], [$target->getHealth(), $projectile->getResultDamage(), $target->getName(), $target->getDisplayName()], $this->data["tip"]["message"]));
+        }
 	}
 
 	/**
@@ -137,9 +137,10 @@ class HypixelBow extends PluginBase implements Listener {
 		));
 	}
 
-	/**
-	 * @return void
-	 */
+    /**
+     * @return void
+     * @throws \JsonException
+     */
 	private function saveData(): void {
 		$this->getConfig()->setAll($this->data);
 		$this->getConfig()->save();

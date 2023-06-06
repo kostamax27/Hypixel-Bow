@@ -14,9 +14,6 @@ use pocketmine\command\CommandSender;
 
 class hBowCommand extends Command implements PluginOwned {
 
-	/** @var HypixelBow */
-	private HypixelBow $plugin;
-
 	/**
 	 * @param HypixelBow $plugin
 	 * @param string $name
@@ -24,10 +21,10 @@ class hBowCommand extends Command implements PluginOwned {
 	 * @param string|null $usageMessage
 	 * @param array $aliases
 	 */
-	public function __construct(HypixelBow $plugin, string $name, string $description = "", string $usageMessage = null, array $aliases = []) {
-		$this->plugin = $plugin;
-
+	public function __construct(private readonly HypixelBow $plugin, string $name, string $description = "", string $usageMessage = null, array $aliases = []) {
 		parent::__construct($name, $description, $usageMessage, $aliases);
+
+        $this->setPermission("hypixelbow.cmd");
 	}
 
 	/**
@@ -38,18 +35,22 @@ class hBowCommand extends Command implements PluginOwned {
 	 * @return void
 	 */
 	public function execute(CommandSender $sender, string $commandLabel, array $args): void {
-		if($sender instanceof Player) {
-			if($sender->hasPermission("hypixelbow.cmd")) {
-				$this->plugin->getHypixelBowSettings($sender);
-			} else {
-				$sender->sendMessage(TextFormat::RED . "You have not permissions to use this command!");
-			}
-		} else {
-			$sender->sendMessage(TextFormat::RED . "Use this command in-game!");
+		if(!($sender instanceof Player)) {
+            $sender->sendMessage(TextFormat::RED . "Use this command in-game!");
+            return;
 		}
+
+        if(!$this->testPermission($sender)) {
+            return;
+        }
+
+        $this->plugin->getHypixelBowSettings($sender);
 	}
 
-	public function getOwningPlugin(): Plugin {
+    /**
+     * @return Plugin
+     */
+    public function getOwningPlugin(): Plugin {
 		return $this->plugin;
 	}
 }
