@@ -81,7 +81,6 @@ class HypixelBow extends PluginBase implements Listener {
     }
 
     /**
-     *
      * @noinspection PhpUnused
      *
      * @param ProjectileHitEntityEvent $event
