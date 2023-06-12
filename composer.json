@@ -5,12 +5,18 @@
     "require-dev": {
         "php": "^8.0",
         "pocketmine/pocketmine-mp": "^4.0.0",
-        "phpstan/phpstan": "1.10.14"
+        "phpstan/phpstan": "1.10.14",
+        "vecnavium/formsui": "^1.1.2"
     },
     "config": {
         "platform": {
             "php": "8.0"
         },
         "sort-packages": true
+    },
+    "autoload": {
+        "psr-4": {
+            "": ["src"]
+        }
     }
 }
