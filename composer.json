@@ -1,0 +1,16 @@
+{
+    "name": "kostamax27/hypixelbow",
+    "type": "project",
+    "license": "GPL-3.0-only",
+    "require-dev": {
+        "php": "^8.0",
+        "pocketmine/pocketmine-mp": "^4.0.0",
+        "phpstan/phpstan": "1.10.14"
+    },
+    "config": {
+        "platform": {
+            "php": "8.0"
+        },
+        "sort-packages": true
+    }
+}
