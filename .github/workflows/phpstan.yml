@@ -22,6 +22,17 @@ jobs:
       - name: Unpack PHP
         run: tar -xzvf PHP-Linux-x86_64-PM5.tar.gz
 
+      - name: Get composer cache directory
+        id: composer-cache
+        run: echo "dir=$(composer config cache-files-dir)" >> $GITHUB_OUTPUT
+
+      - name: Cache composer dependencies
+        uses: actions/cache@v3
+        with:
+          path: ${{ steps.composer-cache.outputs.dir }}
+          key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
+          restore-keys: ${{ runner.os }}-composer-
+
       - name: Download Composer
         run: curl -o composer.phar "https://getcomposer.org/composer-stable.phar"
 
