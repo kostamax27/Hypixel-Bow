@@ -2,11 +2,13 @@
     "name": "kostamax27/hypixelbow",
     "type": "project",
     "license": "GPL-3.0-only",
-    "require-dev": {
+    "require": {
         "php": "^8.1",
         "pocketmine/pocketmine-mp": "^5.0",
-        "phpstan/phpstan": "1.10.14",
         "vecnavium/formsui": "dev-master"
+    },
+    "require-dev": {
+        "phpstan/phpstan": "1.10.14"
     },
     "config": {
         "platform": {
