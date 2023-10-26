@@ -13,7 +13,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Download PHP
-        uses: dsaltares/fetch-gh-release-asset@1.1.0
+        uses: dsaltares/fetch-gh-release-asset@1.1.1
         with:
           file: PHP-Linux-x86_64-PM5.tar.gz
           repo: pmmp/PHP-Binaries
